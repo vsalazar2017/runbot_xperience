@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <!-- repos -->
+    <record id="view_repo_form_nobuild" model="ir.ui.view">
+        <field name="model">runbot.repo</field>
+        <field name="inherit_id" ref="runbot.view_repo_form"/>
+        <field name="arch" type="xml">
+              <xpath expr="//field[@name='modules']" position="after">
+		     	<field name="nobuild" />
+		     	<field name="db_name" />
+                <field name="docoverage" />
+		    </xpath>
+        </field>
+    </record>
+    
+    <template id="build_button" inherit_id="runbot.build_button" name="build_button_xp">
+    	<xpath expr="//li[@t-if=&quot;bu['host']&quot;]" position="before">
+        	<t t-if="bu['docoverage']">
+            	<li><a t-attf-href="http://{{bu['host']}}/runbot/static/build/#{bu['real_dest']}/logs/coverage/index.html" target="_blank">Coverage <i class="fa fa-newspaper-o"/></a></li>
+            </t>
+        </xpath>
+     </template>
+</data>   
+</openerp>
